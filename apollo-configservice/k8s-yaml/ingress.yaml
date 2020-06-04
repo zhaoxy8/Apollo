@@ -1,0 +1,14 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata: 
+  name: apollo-configservice
+  namespace: infra
+spec:
+  rules:
+  - host: apolloconfig-dev-int.aibixby.com.cn
+    http:
+      paths:
+      - path: /
+        backend: 
+          serviceName: apollo-configservice
+          servicePort: 8080
