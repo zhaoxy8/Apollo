@@ -1,14 +1,23 @@
 kind: Ingress
 apiVersion: extensions/v1beta1
-metadata: 
+metadata:
   name: apollo-configservice
   namespace: infra
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    #alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+  labels:
+    app: apollo-configservice-ingress
 spec:
   rules:
-  - host: apolloconfig-dev-int.aibixby.com.cn
+  - host: apolloconfig-dev-int.int
     http:
       paths:
-      - path: /
-        backend: 
+      - path: /*
+        backend:
           serviceName: apollo-configservice
           servicePort: 8080

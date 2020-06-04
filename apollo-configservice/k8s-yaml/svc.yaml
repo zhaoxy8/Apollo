@@ -10,6 +10,4 @@ spec:
     targetPort: 8080
   selector: 
     app: apollo-configservice
-  clusterIP: None
-  type: ClusterIP
-  sessionAffinity: None
+  type: NodePort

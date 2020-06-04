@@ -9,6 +9,6 @@ data:
     spring.datasource.url = jdbc:mysql://52.82.117.0:3306/ApolloConfigDB?characterEncoding=utf8
     spring.datasource.username = apolloconfig
     spring.datasource.password = 1qaz@WSX
-    eureka.service.url = https://apolloconfig-dev-int.aibixby.com.cn/eureka
+    eureka.service.url = http://apolloconfig-dev-int.int/eureka
   app.properties: |
     appId=100003171
