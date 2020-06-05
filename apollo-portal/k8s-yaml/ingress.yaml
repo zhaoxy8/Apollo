@@ -1,0 +1,23 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: apollo-portal
+  namespace: infra
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-path: /signin
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+  labels:
+    app: apolloportal-ingress
+spec:
+  rules:
+  - host: apolloportal-dev-int.int
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: apollo-portal
+          servicePort: 8080

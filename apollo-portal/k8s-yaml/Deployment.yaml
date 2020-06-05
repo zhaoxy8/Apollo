@@ -1,0 +1,48 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: apollo-portal
+  namespace: infra
+  labels: 
+    name: apollo-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      name: apollo-portal
+  template:
+    metadata:
+      labels: 
+        app: apollo-portal 
+        name: apollo-portal
+    spec:
+      volumes:
+      - name: configmap-volume
+        configMap:
+          name: apollo-portal-cm
+      containers:
+      - name: apollo-portal
+        image: registry.cn-hangzhou.aliyuncs.com/infra-xyzhao/apollo-portal:v1.5.1
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - name: configmap-volume
+          mountPath: /apollo-portal/config
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        imagePullPolicy: IfNotPresent
+      imagePullSecrets:
+      - name: ali-secret
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      securityContext: 
+        runAsUser: 0
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1
+  revisionHistoryLimit: 7
+  progressDeadlineSeconds: 600

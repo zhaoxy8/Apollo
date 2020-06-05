@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata: 
+  name: apollo-portal
+  namespace: infra
+spec:
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector: 
+    app: apollo-portal
+  type: NodePort
